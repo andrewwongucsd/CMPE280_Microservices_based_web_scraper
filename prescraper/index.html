@@ -1,0 +1,77 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>WEB SCRIPPING</title>
+  <meta name="description" content="CMPE280 - PA10">
+  <meta name="author" content="Andrew Wong">
+  <style>
+  * {box-sizing: border-box;}
+  html {font-weight: 300;  -webkit-font-smoothing: antialiased;}
+  html, input {font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue",Helvetica,  Arial,"Lucida Grande",sans-serif;}
+  html, body {height: 100%;margin: 0;padding: 0;}
+
+  </style>
+
+  <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+  <button id="trigger" type="button">Click Me to fetch</button>
+  <button id="save" type="button">Click Me to save</button>
+  <table id="table" style="width:100%">
+    <tr><th>UPC</th><th>Product Name</th><th>Manufacturer</th><th>Ingredients</th><tr>
+  </table>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script>
+  var csv = [];
+  $(document).ready(function(){
+    $("#trigger").click(function(){
+      csv = [];
+      $.ajax({
+        url: "http://localhost:3000",
+        success: function(result){
+          console.log(result);
+          $.each(result, function(index, object){
+            $('#table tr:last').after('<tr><td>'+object.upc+'</td><td>'+object.product_name+'</td><td>'+object.manufacturer+'</td><td>'+object.ingredients+'</td></tr>');
+            csv.push(object.upc+','+object.product_name+','+object.manufacturer+','+object.ingredients+',');
+          });
+        }
+      });
+    });
+    $("#save").click(function(){
+      if(csv === undefined || csv.length == 0) {
+          alert("Please click 'Click Me to fetch' !");
+      }else{
+          downloadCSV(csv.join("\n"), "usda_database"+Date.now().toString()+".csv");
+      }
+    });
+    function downloadCSV(csv, filename) {
+      var csvFile;
+      var downloadLink;
+      // CSV file
+      csvFile = new Blob([csv], {type: "text/csv"});
+      // Download link
+      downloadLink = document.createElement("a");
+      // File name
+      downloadLink.download = filename;
+      // Create a link to the file
+      downloadLink.href = window.URL.createObjectURL(csvFile);
+      // Hide download link
+      downloadLink.style.display = "none";
+      // Add the link to DOM
+      document.body.appendChild(downloadLink);
+      // Click download link
+      downloadLink.click();
+    }
+  });
+
+
+
+  </script>
+</body>
+</html>

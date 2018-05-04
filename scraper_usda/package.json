@@ -1,0 +1,17 @@
+{
+  "name": "Page-Scraper-",
+  "version": "1.0.0",
+  "description": "A tiny Node.js microservice to scrape USDA Food Composition Databases.",
+  "main": "index.js",
+  "scripts": {
+    "start": "micro -p 4000",
+    "test": "standard"
+  },
+  "author": "Andrew Wong",
+  "license": "MIT",
+  "dependencies": {
+    "got": "^8.0.1",
+    "micro": "^7.0.6",
+    "cheerio": "latest"
+  }
+}

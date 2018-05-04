@@ -1,0 +1,19 @@
+{
+  "name": "Page-Scraper-Prep",
+  "version": "1.0.0",
+  "description": "A tiny Node.js microservice to do prep for scraping web pages.",
+  "main": "index.js",
+  "scripts": {
+    "start": "micro -p 3000",
+    "dev": "nodemon --exec \"npm start\" -e \"js\"",
+    "test": "standard"
+  },
+  "author": "Andrew Wong",
+  "license": "MIT",
+  "dependencies": {
+    "micro": "^7.0.6",
+    "node-fetch": "latest",
+    "fetch-retry": "latest",
+    "cheerio": "latest"
+  }
+}
